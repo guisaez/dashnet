@@ -50,14 +50,16 @@ const NetWorthCard = ({ netWorthData }: { netWorthData: UserItem[] }) => {
     institution.accounts.forEach((account) => {
       total += account.balance.current_balance || 0;
     });
-    return total
-  }, 0.00)
+    return total;
+  }, 0.00);
+  
+  const formattedNetWorth = totalNetWorth.toLocaleString('en-US'); // Set locale explicitly
   
   return (
     <Card className="bg-gradient-to-t from-indigo-600 to-blue-500 text-white p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
       <h3 className="text-2xl font-semibold">Total Net Worth</h3>
       <p className="text-4xl mt-2 font-medium">
-        ${totalNetWorth.toLocaleString()}
+        ${formattedNetWorth.toLocaleString()}
       </p>
     </Card>
   )
@@ -76,24 +78,30 @@ const InstitutionList = ({ institution }: { institution: UserItem }) => {
   )
 }
 
-const AccountCard = ({ account }: { account: Account}) => {
+const AccountCard = ({ account }: { account: Account }) => {
   const { account_name, account_type, balance, mask } = account;
-
+  const { current_balance, available_balance, iso_currency_code } = balance;
+  
   return (
-    <Card className="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
-      <div className="flex items-center justify-between">
+    <Card className="p-6 bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
+      <div className="flex items-start justify-between">
         <div>
           <h4 className="font-semibold text-lg text-gray-800">{account_name}</h4>
           <p className="text-sm text-gray-500">{account_type}</p>
+          <p className="text-xs text-gray-400 mt-1">Account Mask: {mask}</p>
         </div>
-        <p className="text-xl text-gray-900 font-medium">
-          ${balance.current_balance?.toLocaleString() || "0.00"}
-        </p>
+        <div className="text-right">
+          <p className="text-2xl font-bold text-gray-900">
+            ${current_balance?.toLocaleString() || "0.00"}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">
+            Available: ${available_balance?.toLocaleString() || "0.00"}
+          </p>
+          {iso_currency_code && (
+            <p className="text-xs text-gray-400 mt-1">{iso_currency_code}</p>
+          )}
+        </div>
       </div>
-      <p className="text-sm text-gray-400 mt-2">Account Mask: {mask}</p>
-      {balance.iso_currency_code && (
-        <p className="text-xs text-gray-500 mt-1">Currency: {balance.iso_currency_code}</p>
-      )}
     </Card>
   );
 };

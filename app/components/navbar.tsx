@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { Link } from 'react-router'
 import { 
   DropdownMenu, 
   DropdownMenuTrigger, 
@@ -11,12 +11,14 @@ import { Button } from "./ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 import { UserIcon, LogOut as LogOutIcon } from "lucide-react"
 import type { User } from "~/lib/definitions"
+import LogoutRoute from '~/routes/auth/logout'
 
 interface NavbarProps {
   user: User | null
 }
 
 export default function Navbar({ user }: NavbarProps) {
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between px-4 sm:px-8">
@@ -61,8 +63,7 @@ export default function Navbar({ user }: NavbarProps) {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center space-x-2 hover:bg-muted-foreground/10 rounded-md px-3 py-2 transition-colors">
-                  <LogOutIcon className="h-4 w-4" />
-                  <span>Log out</span>
+                    <LogoutRoute/>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

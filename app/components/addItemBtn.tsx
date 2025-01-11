@@ -42,6 +42,9 @@ export default function AddInstitutionButton() {
         // Navigate to the current route to refresh the page
         navigate(".", { replace: true });
       }
+    },
+    onExit: (err, metadata) => {
+      console.log(err)
     }
   })
   
