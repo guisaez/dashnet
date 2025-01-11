@@ -1,0 +1,19 @@
+services:
+  dashnet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+    container_name: dashnet
+    environment:
+      - VITE_NETLY_HOST=${VITE_NETLY_HOST}
+    ports:
+      - '3000:3000'
+    networks:
+      - netly_network
+      
+networks:
+  netly_network:
+    name: netly_netly_network
+    external: true  # This makes it an external network (it must already exist)
